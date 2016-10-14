@@ -60,6 +60,7 @@ open class WhistleFactory: UIViewController {
     titleLabel.text = murmur.title
     titleLabel.font = murmur.font
     titleLabel.textColor = murmur.titleColor
+    titleLabel.numberOfLines = murmur.lines
     view.backgroundColor = murmur.backgroundColor
     whistleWindow.backgroundColor = murmur.backgroundColor
 
@@ -96,7 +97,7 @@ open class WhistleFactory: UIViewController {
     let labelWidth = UIScreen.main.bounds.width
     let defaultHeight = titleLabelHeight
 
-    if let text = titleLabel.text {
+    if let text = titleLabel.text, titleLabel.numberOfLines == 0 {
       let neededDimensions =
         NSString(string: text).boundingRect(
           with: CGSize(width: labelWidth, height: CGFloat.infinity),
@@ -105,8 +106,7 @@ open class WhistleFactory: UIViewController {
           context: nil
         )
       titleLabelHeight = CGFloat(neededDimensions.size.height)
-      titleLabel.numberOfLines = 0 // Allows unwrapping
-
+        
       if titleLabelHeight < defaultHeight {
         titleLabelHeight = defaultHeight
       }
